@@ -41,7 +41,14 @@
         carrito.value[index].cantidad -= 1;
     }
   }
+
+  const eliminarGuitarra = (id) => {
+    carrito.value = carrito.value.filter(guitarra => guitarra.id != id)
+  }
   
+  const vaciarCarrito = () => {
+    carrito.value = [];
+  }
 
 </script>
 
@@ -52,6 +59,8 @@
         @aumentar-cantidad="aumentarCantidad"
         @disminuir-cantidad="disminuirCantidad"
         @agregar-carrito="onAgregarCarrito"
+        @eliminar-guitarra="eliminarGuitarra"
+        @vaciar-carrito="vaciarCarrito"
     />
 
     <main class="container-xl mt-5">

@@ -19,7 +19,9 @@
     defineEmits([
         'aumentar-cantidad',
         'disminuir-cantidad',
-        'agregar-carrito'
+        'agregar-carrito',
+        'eliminar-guitarra',
+        'vaciar-carrito'
     ]);
 
 </script>
@@ -80,6 +82,7 @@
                                             </td>
                                             <td>
                                                 <button
+                                                    @click="$emit('eliminar-guitarra', guitarra.id)"
                                                     class="btn btn-danger"
                                                     type="button"
                                                 >
@@ -91,7 +94,7 @@
                                 </table>
 
                                 <p class="text-end">Total pagar: <span class="fw-bold">$ {{ totalPagar }}</span></p>
-                                <button class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                                <button @click="$emit('vaciar-carrito')" class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                             </div>
                             
                         </div>
