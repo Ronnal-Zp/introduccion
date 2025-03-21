@@ -8,9 +8,11 @@
 
   const guitarras = ref([]);
   const carrito = ref([]);
+  const guitarraHeader = ref({});
 
   onMounted(() => {
     guitarras.value = db;
+    guitarraHeader.value = db[3];
   });
 
   const onAgregarCarrito = (guitarra) => {
@@ -46,8 +48,10 @@
 <template>
     <Header
         :carrito="carrito"
+        :guitarraHeader="guitarraHeader"
         @aumentar-cantidad="aumentarCantidad"
         @disminuir-cantidad="disminuirCantidad"
+        @agregar-carrito="onAgregarCarrito"
     />
 
     <main class="container-xl mt-5">

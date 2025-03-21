@@ -1,20 +1,27 @@
 <script setup>
-    import { onMounted } from "vue";
+    import { computed } from "vue";
+
     const props = defineProps({
         carrito: {
             type: Array,
             required: true
+        },
+        guitarraHeader: {
+            type: Object,
+            required: true
         }
+    })
+
+    const totalPagar = computed(() => {
+        return props.carrito.reduce((total, guitarra) => total + (guitarra.precio * guitarra.cantidad), 0)
     })
     
     defineEmits([
         'aumentar-cantidad',
-        'disminuir-cantidad'
+        'disminuir-cantidad',
+        'agregar-carrito'
     ]);
 
-    onMounted(() => {
-        console.log('props',props.carrito)  
-    });
 </script>
 
 <template>
@@ -50,7 +57,7 @@
                                             <td>
                                                 <img class="img-fluid" :src="'/img/'+guitarra.imagen+'.jpg'" :alt="guitarra.nombre">
                                             </td>
-                                            <td>SRV</td>
+                                            <td>{{ guitarra.nombre }}</td>
                                             <td class="fw-bold">
                                                     $ {{ guitarra.precio }}
                                             </td>
@@ -83,7 +90,7 @@
                                     </tbody>
                                 </table>
 
-                                <p class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
+                                <p class="text-end">Total pagar: <span class="fw-bold">$ {{ totalPagar }}</span></p>
                                 <button class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                             </div>
                             
@@ -94,12 +101,13 @@
 
             <div class="row mt-5">
                 <div class="col-md-6 text-center text-md-start pt-5">
-                    <h1 class="display-2 fw-bold">Modelo VAI</h1>
-                    <p class="mt-5 fs-5 text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, possimus quibusdam dolor nemo velit quo, fuga omnis, iure molestias optio tempore sint at ipsa dolorum odio exercitationem eos inventore odit.</p>
-                    <p class="text-primary fs-1 fw-black">$399</p>
+                    <h1 class="display-2 fw-bold">Modelo {{ guitarraHeader.nombre }}</h1>
+                    <p class="mt-5 fs-5 text-white">{{ guitarraHeader.descripcion }}</p>
+                    <p class="text-primary fs-1 fw-black">$ {{ guitarraHeader.precio }}</p>
                     <button 
                         type="button"
                         class="btn fs-4 bg-primary text-white py-2 px-5"
+                        @click="$emit('agregar-carrito', guitarraHeader)"
                     >Agregar al Carrito</button>
                 </div>
             </div>
